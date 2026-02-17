@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-serif);
+}
+
+:root {
+  /* Soft Forest Green Palette - Light Mode */
+  --background: #fdfbf7;
+  /* Cream/Off-white */
+  --foreground: #2c332e;
+  /* Dark Charcoal Green */
+
+  --card: #ffffff;
+  --card-foreground: #2c332e;
+
+  --popover: #ffffff;
+  --popover-foreground: #2c332e;
+
+  --primary: #3a6b48;
+  /* Soft Forest Green */
+  --primary-foreground: #ffffff;
+
+  --secondary: #e8f0eb;
+  /* Sage Green tint */
+  --secondary-foreground: #3a6b48;
+
+  --muted: #f2f5f3;
+  --muted-foreground: #78857d;
+
+  --accent: #d4a373;
+  /* Earthy Gold */
+  --accent-foreground: #ffffff;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+
+  --border: #e0e5e2;
+  --input: #e0e5e2;
+  --ring: #3a6b48;
+  --radius: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Deep Forest - Dark Mode */
+    --background: #1a201d;
+    /* Very Dark Green-Grey */
+    --foreground: #ecfdf5;
+    /* Light Mint/White */
+
+    --card: #232c27;
+    --card-foreground: #ecfdf5;
+
+    --popover: #232c27;
+    --popover-foreground: #ecfdf5;
+
+    --primary: #4ade80;
+    /* Bright Green for dark mode contrast */
+    --primary-foreground: #1a201d;
+
+    --secondary: #2f3e35;
+    --secondary-foreground: #ecfdf5;
+
+    --muted: #2f3e35;
+    --muted-foreground: #9ca3af;
+
+    --accent: #d4a373;
+    --accent-foreground: #ffffff;
+
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fafafa;
+
+    --border: #2f3e35;
+    --input: #2f3e35;
+    --ring: #4ade80;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}

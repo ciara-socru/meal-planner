@@ -1,0 +1,83 @@
+import { Recipe } from '@/types';
+
+export const MOCK_RECIPES: Recipe[] = [
+    {
+        id: '1',
+        title: 'Quinoa Salad with Roasted Vegetables',
+        description: 'A healthy and filling salad perfect for lunch.',
+        ingredients: [
+            { name: 'Quinoa', quantity: 1, unit: 'cup' },
+            { name: 'Bell Pepper', quantity: 2, unit: 'piece' },
+            { name: 'Zucchini', quantity: 1, unit: 'piece' },
+            { name: 'Feta Cheese', quantity: 100, unit: 'g' },
+        ],
+        instructions: [
+            'Cook quinoa according to package instructions.',
+            'Roast chopped vegetables at 200°C for 20 minutes.',
+            'Mix everything together and serve.',
+        ],
+        tags: ['Vegetarian', 'Gluten-Free'],
+        prepTimeMinutes: 10,
+        cookTimeMinutes: 20,
+        servings: 2,
+    },
+    {
+        id: '2',
+        title: 'Grilled Chicken with Asparagus',
+        description: 'Simple and protein-packed dinner.',
+        ingredients: [
+            { name: 'Chicken Breast', quantity: 2, unit: 'piece' },
+            { name: 'Asparagus', quantity: 1, unit: 'pack' },
+            { name: 'Olive Oil', quantity: 1, unit: 'tbsp' },
+            { name: 'Lemon', quantity: 1, unit: 'piece' },
+        ],
+        instructions: [
+            'Marinate chicken with olive oil, lemon juice, salt, and herbs.',
+            'Grill chicken for 6-7 minutes per side.',
+            'Grill asparagus for 3-4 minutes.',
+        ],
+        tags: ['Gluten-Free', 'Low-Carb', 'Dairy-Free'],
+        prepTimeMinutes: 10,
+        cookTimeMinutes: 15,
+        servings: 2,
+    },
+    {
+        id: '3',
+        title: 'Oatmeal with Berries',
+        description: 'Warm and comforting breakfast.',
+        ingredients: [
+            { name: 'Oats', quantity: 1, unit: 'cup' },
+            { name: 'Almond Milk', quantity: 2, unit: 'cup' },
+            { name: 'Mixed Berries', quantity: 0.5, unit: 'cup' },
+            { name: 'Honey', quantity: 1, unit: 'tbsp' },
+        ],
+        instructions: [
+            'Simmer oats and milk for 5-10 minutes.',
+            'Top with berries and honey.',
+        ],
+        tags: ['Vegetarian', 'Dairy-Free'],
+        prepTimeMinutes: 2,
+        cookTimeMinutes: 10,
+        servings: 2,
+    },
+    {
+        id: '4',
+        title: 'Lentil Soup',
+        description: 'Hearty soup for cold days.',
+        ingredients: [
+            { name: 'Lentils', quantity: 1, unit: 'cup' },
+            { name: 'Carrots', quantity: 2, unit: 'piece' },
+            { name: 'Celery', quantity: 2, unit: 'piece' },
+            { name: 'Vegetable Broth', quantity: 4, unit: 'cup' },
+        ],
+        instructions: [
+            'Sauté vegetables.',
+            'Add lentils and broth.',
+            'Simmer for 30 minutes.',
+        ],
+        tags: ['Vegan', 'Gluten-Free'],
+        prepTimeMinutes: 10,
+        cookTimeMinutes: 30,
+        servings: 4,
+    },
+];
