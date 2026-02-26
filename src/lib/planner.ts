@@ -1,12 +1,12 @@
-import { MealPlanDay, Recipe, MealType } from '@/types';
+import { MealPlanDay, Recipe } from '@/types';
 
 // Helper to get formatted date string
-function getNext7Days(): string[] {
+function getNext7Days(startDate?: string): string[] {
     const dates = [];
-    const today = new Date();
+    const start = startDate ? new Date(startDate) : new Date();
     for (let i = 0; i < 7; i++) {
-        const nextDate = new Date(today);
-        nextDate.setDate(today.getDate() + i);
+        const nextDate = new Date(start);
+        nextDate.setDate(start.getDate() + i);
         dates.push(nextDate.toISOString().split('T')[0]);
     }
     return dates;
@@ -17,18 +17,18 @@ function shuffle<T>(array: T[]): T[] {
     return array.sort(() => Math.random() - 0.5);
 }
 
-export function generateWeeklyPlan(recipes: Recipe[]): MealPlanDay[] {
-    const dates = getNext7Days();
+export function generateWeeklyPlan(recipes: Recipe[], startDate?: string): MealPlanDay[] {
+    const dates = getNext7Days(startDate);
     const days: MealPlanDay[] = [];
 
-    // Group recipes by potential meal type (simple heuristic)
+    // Group recipes by potential meal type (using explicit mealTypes)
     const breakfastRecipes = recipes.filter(r =>
-        r.title.toLowerCase().includes('oat') ||
-        r.title.toLowerCase().includes('egg') ||
-        r.tags.includes('Breakfast' as any)
+        r.mealTypes?.includes('Breakfast')
     );
 
-    const mainRecipes = recipes.filter(r => !breakfastRecipes.includes(r));
+    const mainRecipes = recipes.filter(r =>
+        r.mealTypes?.includes('Lunch') || r.mealTypes?.includes('Dinner')
+    );
 
     // Fallbacks if no specific recipes found
     const poolBreakfast = breakfastRecipes.length > 0 ? breakfastRecipes : recipes;
@@ -39,7 +39,7 @@ export function generateWeeklyPlan(recipes: Recipe[]): MealPlanDay[] {
         const dayBreakfast = shuffle(poolBreakfast)[0];
         const dayLunch = shuffle(poolMain)[0];
         const dayDinner = shuffle(poolMain)[1] || dayLunch; // Ensure enough recipes or repeat
-        const daySnack = null; // Optional
+        // const daySnack = null; // Optional
 
         days.push({
             date,

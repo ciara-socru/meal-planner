@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Recipe, MealType } from '@/types';
+import { Recipe } from '@/types';
 
 interface EditMealModalProps {
     isOpen: boolean;
@@ -29,6 +29,7 @@ export function EditMealModal({
     useEffect(() => {
         if (isOpen) {
             if (currentRecipeId) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setMode('recipe');
                 setSelectedRecipeId(currentRecipeId);
             } else if (currentCustomDescription) {
@@ -64,8 +65,8 @@ export function EditMealModal({
                             key={m}
                             onClick={() => setMode(m)}
                             className={`flex-1 rounded-sm px-3 py-1.5 text-sm font-medium transition-all ${mode === m
-                                    ? 'bg-background text-foreground shadow-sm'
-                                    : 'text-muted-foreground hover:text-foreground'
+                                ? 'bg-background text-foreground shadow-sm'
+                                : 'text-muted-foreground hover:text-foreground'
                                 }`}
                         >
                             {m === 'recipe' ? 'Recipe' : m === 'custom' ? 'Custom' : 'Dining Out'}
@@ -107,7 +108,7 @@ export function EditMealModal({
 
                     {mode === 'out' && (
                         <p className="text-sm text-muted-foreground py-4">
-                            Mark this meal as "Dining Out". Ingredients won't be added to the shopping list.
+                            Mark this meal as &quot;Dining Out&quot;. Ingredients won&apos;t be added to the shopping list.
                         </p>
                     )}
                 </div>

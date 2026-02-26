@@ -1,4 +1,4 @@
-import { Recipe, PantryItem, Ingredient, MealPlanDay } from '@/types';
+import { Recipe, PantryItem, Ingredient, MealPlanDay, Unit } from '@/types';
 
 interface ShoppingListItem extends Ingredient {
     checked: boolean;
@@ -22,7 +22,8 @@ export function generateShoppingList(
                         if (!needed[key]) {
                             needed[key] = { quantity: 0, unit: ing.unit };
                         }
-                        needed[key].quantity += ing.quantity;
+                        const q = parseFloat(ing.quantity);
+                        needed[key].quantity += isNaN(q) ? 0 : q;
                     });
                 }
             }
@@ -43,8 +44,8 @@ export function generateShoppingList(
     // 3. Convert to list
     return Object.entries(needed).map(([name, data]) => ({
         name: name.charAt(0).toUpperCase() + name.slice(1),
-        quantity: data.quantity,
-        unit: data.unit as any,
+        quantity: data.quantity.toString(), // Convert back to string for UI
+        unit: data.unit as Unit,
         checked: false
     }));
 }

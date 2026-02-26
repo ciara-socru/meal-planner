@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAppStore } from '@/lib/store';
 import Link from 'next/link';
 import { EditMealModal } from '@/components/EditMealModal';
-import { MealType } from '@/types';
+import { MealPlanDay, MealType } from '@/types';
 
 export default function PlannerPage() {
     const { state, generatePlan, updateMealPlan } = useAppStore();
@@ -47,7 +47,7 @@ export default function PlannerPage() {
         setEditModalOpen(false);
     };
 
-    const getMealDisplay = (day: any, type: MealType) => {
+    const getMealDisplay = (day: MealPlanDay, type: MealType) => {
         const meal = day.meals[type];
         if (!meal) return <span className="text-sm text-muted-foreground italic">No meal planned</span>;
 
@@ -76,7 +76,7 @@ export default function PlannerPage() {
             <div className="flex flex-col items-center justify-center py-12 space-y-6">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground">Weekly Planner</h1>
                 <p className="text-muted-foreground text-center max-w-md">
-                    You don't have a meal plan for this week yet.
+                    You don&apos;t have a meal plan for this week yet.
                 </p>
                 <button
                     onClick={generatePlan}

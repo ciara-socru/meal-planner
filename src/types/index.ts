@@ -4,7 +4,7 @@ export type Unit = 'g' | 'kg' | 'ml' | 'l' | 'cup' | 'tbsp' | 'tsp' | 'piece' | 
 
 export interface Ingredient {
     name: string;
-    quantity: number;
+    quantity: string; // Changed to string to support "to taste", "thumb-sized", etc.
     unit: Unit;
 }
 
@@ -15,6 +15,7 @@ export interface Recipe {
     ingredients: Ingredient[];
     instructions: string[];
     tags: string[];
+    mealTypes: MealType[]; // Added to classify recipes
     prepTimeMinutes: number;
     cookTimeMinutes: number;
     servings: number;

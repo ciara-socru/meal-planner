@@ -2,28 +2,35 @@
 
 import { useAppStore } from '@/lib/store';
 import { generateShoppingList } from '@/lib/shopping-list';
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function ShoppingListPage() {
     const { state } = useAppStore();
     const { mealPlan, recipes, pantry } = state;
 
-    const [items, setItems] = useState<ReturnType<typeof generateShoppingList>>([]);
+    const [checkedNames, setCheckedNames] = useState<Set<string>>(new Set());
 
-    useEffect(() => {
+    const items = useMemo(() => {
         if (mealPlan.length > 0) {
-            setItems(generateShoppingList(mealPlan, recipes, pantry));
+            return generateShoppingList(mealPlan, recipes, pantry);
         }
+        return [];
     }, [mealPlan, recipes, pantry]);
 
     const handlePrint = () => {
         window.print();
     };
 
-    const toggleItem = (index: number) => {
-        const newItems = [...items];
-        newItems[index].checked = !newItems[index].checked;
-        setItems(newItems);
+    const toggleItem = (name: string) => {
+        setCheckedNames((prev) => {
+            const next = new Set(prev);
+            if (next.has(name)) {
+                next.delete(name);
+            } else {
+                next.add(name);
+            }
+            return next;
+        });
     };
 
     if (!mealPlan || mealPlan.length === 0) {
@@ -63,26 +70,29 @@ export default function ShoppingListPage() {
                         {items.length === 0 ? (
                             <li className="py-8 text-center text-muted-foreground italic">Nothing to buy! You have everything you need.</li>
                         ) : (
-                            items.map((item, idx) => (
-                                <li key={idx} className="flex items-center py-4 group">
-                                    <input
-                                        id={`item-${idx}`}
-                                        type="checkbox"
-                                        checked={item.checked}
-                                        onChange={() => toggleItem(idx)}
-                                        className="h-5 w-5 rounded border-input text-primary focus:ring-primary print:hidden transition-transform active:scale-95"
-                                    />
-                                    <label
-                                        htmlFor={`item-${idx}`}
-                                        className={`ml-4 text-sm font-medium text-foreground flex-1 cursor-pointer select-none transition-colors ${item.checked ? 'line-through text-muted-foreground' : 'group-hover:text-primary'}`}
-                                    >
-                                        {item.name}
-                                    </label>
-                                    <span className={`text-sm font-semibold transition-colors ${item.checked ? 'text-muted-foreground' : 'text-foreground'}`}>
-                                        {Math.ceil(item.quantity * 10) / 10} {item.unit}
-                                    </span>
-                                </li>
-                            ))
+                            items.map((item, idx) => {
+                                const isChecked = checkedNames.has(item.name);
+                                return (
+                                    <li key={idx} className="flex items-center py-4 group">
+                                        <input
+                                            id={`item-${idx}`}
+                                            type="checkbox"
+                                            checked={isChecked}
+                                            onChange={() => toggleItem(item.name)}
+                                            className="h-5 w-5 rounded border-input text-primary focus:ring-primary print:hidden transition-transform active:scale-95"
+                                        />
+                                        <label
+                                            htmlFor={`item-${idx}`}
+                                            className={`ml-4 text-sm font-medium text-foreground flex-1 cursor-pointer select-none transition-colors ${isChecked ? 'line-through text-muted-foreground' : 'group-hover:text-primary'}`}
+                                        >
+                                            {item.name}
+                                        </label>
+                                        <span className={`text-sm font-semibold transition-colors ${isChecked ? 'text-muted-foreground' : 'text-foreground'}`}>
+                                            {Math.ceil(parseFloat(item.quantity) * 10) / 10} {item.unit}
+                                        </span>
+                                    </li>
+                                );
+                            })
                         )}
                     </ul>
                 </div>

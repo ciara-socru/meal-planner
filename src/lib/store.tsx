@@ -41,6 +41,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             try {
                 const parsed = JSON.parse(saved);
                 // Merge with initial structure to ensure new fields are present
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setState((prev) => ({ ...prev, ...parsed }));
             } catch (e) {
                 console.error('Failed to parse state from local storage', e);
